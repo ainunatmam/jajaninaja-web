@@ -23,7 +23,14 @@ const columns: TableColumn<ProductItem>[] = [
   {
     accessorKey: "name",
     header: "Nama Produk",
+    enableResizing: true,
     cell: ({ row }) => `${row.getValue("name")}`,
+  },
+  {
+    accessorKey: "volume",
+    header: "Berat/Volume",
+    cell: ({ cell, row }) =>
+      `${row.original.volume + " " + row.original.volumeType}`,
   },
   {
     accessorKey: "price",
@@ -33,6 +40,13 @@ const columns: TableColumn<ProductItem>[] = [
 ];
 
 const search = ref("");
+
+const sorting = ref([
+  {
+    id: "name",
+    desc: false,
+  },
+]);
 </script>
 
 <template>
@@ -42,10 +56,7 @@ const search = ref("");
         <h1 class="font-bold">Jajanin Aja Pricing</h1>
       </div>
     </template>
-    <!-- <div class="justify-items-center mb-3">
-      <NuxtImg src="gallery.webp" />
-    </div> -->
-    <!-- <UCard class="sm:p-0 p-0"> -->
+
     <div class="flex px-4 py-3.5 border-b border-[var(--ui-border-accented)]">
       <UInput v-model="search" class="max-w-sm" placeholder="Cari Produk..." />
     </div>
@@ -53,10 +64,8 @@ const search = ref("");
       :data="data?.[0]?.products"
       :columns="columns"
       :global-filter="search"
+      :sorting="sorting"
       class=""
     />
-    <!-- </UCard>/ -->
-
-    <!-- <template #footer> </template> -->
   </UCard>
 </template>

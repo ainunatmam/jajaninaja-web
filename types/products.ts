@@ -11,5 +11,7 @@ export interface ProductItem {
   price: number;
   _type: string;
   name: string;
+  volume: number;
+  volumeType: string;
   _key: string;
 }
