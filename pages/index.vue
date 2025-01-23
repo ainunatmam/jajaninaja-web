@@ -81,52 +81,32 @@ const filteredData = computed(() => {
   });
 });
 
-const colorMode = useColorMode()
-
-const isDark = computed({
-  get: () => colorMode.value === 'dark',
-  set: () => {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-  }
+useSeoMeta({
+  title: 'Daftar Harga JajaninAja'
 })
 </script>
 
 <template>
-  <UiBlurBox class="top-0" />
+  <UiNavbar v-model="search"/>
   <section class="py-5">
     <UContainer>
       <div>
-        <div class="sticky z-30 top-0 py-3 mb-3">
-          <div class="lg:flex">
-            <div class="grow">
-              <h1 class="font-bold text-xl">JajaninAja Pricing</h1>
-              <p>#BantuMenujuLebihLemu</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <ClientOnly v-if="!colorMode?.forced">
-                <UButton :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'" size="xl" variant="outline"
-                  @click="isDark = !isDark" />
-              </ClientOnly>
-              <UInput v-model="search" icon="material-symbols:search" size="xl" type="search"
-                placeholder="Cari Produk..." />
-            </div>
-          </div>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <UCard v-for="(product, index) in filteredData" class="relative overflow-hidden group">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
+          <UCard v-for="(product, index) in filteredData" class="relative cursor-pointer hover:ring-2 hover:ring-[var(--ui-primary)] overflow-hidden group">
             <SanityImage :asset-id="product.image?.asset._ref" auto="format"
               class="absolute top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-30 blur-2xl inset-0" />
-            <div class="flex items-center relative gap-3">
-              <div class="w-16 aspect-square shrink-0 relative overflow-hidden">
+            <div class="items-center relative gap-3">
+              <div class="w-full aspect-square rounded-lg shrink-0 mb-3 group-hover:shadow relative overflow-hidden">
                 <SanityImage :asset-id="product.image?.asset._ref" auto="format"
                   class="w-full absolute top-1/2 -translate-y-1/2" />
               </div>
               <div class="grow">
-                <h3 class="font-bold line-clamp-1 text-[var(--ui-primary)]" v-text="product.name"></h3>
+                <h3 class="font-bold line-clamp-1 text-[var(--ui-primary)] mb-1" v-text="product.name"></h3>
                 <div class="flex gap-3">
-                  <p v-text="`Rp` + product.price.toLocaleString('id-ID')"></p>
-                  <span>—</span>
+                  <div class="flex text-sm bg-green-200 px-1.5 py-0.5 text-green-800 gap-2 items-center border border-green-800 rounded">
+                    <UIcon name="eva:pricetags-fill" size="20px"/>
+                    <p v-text="`Rp` + product.price.toLocaleString('id-ID')"></p>
+                  </div>
                   <p v-text="product.volume.toLocaleString('id-ID') + product.volumeType"></p>
                 </div>
               </div>
@@ -136,4 +116,5 @@ const isDark = computed({
       </div>
     </UContainer>
   </section>
+  <UiFooter/>
 </template>
