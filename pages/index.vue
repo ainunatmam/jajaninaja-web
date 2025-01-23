@@ -97,7 +97,7 @@ const isDark = computed({
       <UCard>
         <div>
           <div class="sticky top-0 pb-3 bg-white dark:bg-zinc-900 mb-3">
-            <div class="flex">
+            <div class="lg:flex">
               <div class="grow">
                 <h1 class="font-bold text-xl">JajaninAja Pricing</h1>
                 <p>#BantuMenujuLebihLemu</p>
